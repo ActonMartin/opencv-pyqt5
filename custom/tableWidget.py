@@ -1,3 +1,7 @@
+"""
+设置每个算法可调属性
+
+"""
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 
@@ -72,6 +76,7 @@ class FilterTabledWidget(TableWidget):
         self.ksize_spinBox.setMinimum(1)
         self.ksize_spinBox.setSingleStep(2)
 
+        # 每个具体属性对应
         self.setColumnCount(2)
         self.setRowCount(2)
         self.setItem(0, 0, QTableWidgetItem('类型'))
@@ -331,4 +336,27 @@ class GammaITabelWidget(TableWidget):
 
         self.setItem(0, 0, QTableWidgetItem('gamma'))
         self.setCellWidget(0, 1, self.gamma_spinbox)
+        self.signal_connect()
+
+
+class NoiseTableWidget(TableWidget):
+    def __init__(self, parent=None):
+        super(NoiseTableWidget, self).__init__(parent=parent)
+
+        self.kind_comBox = QComboBox()
+        self.kind_comBox.addItems(['椒盐噪声', '高斯噪声'])
+        self.kind_comBox.setObjectName('type')
+
+        self.alpha_spinBox = QDoubleSpinBox()
+        self.alpha_spinBox.setMinimum(0)
+        self.alpha_spinBox.setMaximum(1)
+        self.alpha_spinBox.setSingleStep(0.1)
+        self.alpha_spinBox.setObjectName('SNR')
+
+        self.setColumnCount(2)
+        self.setRowCount(2)
+        self.setItem(0, 0, QTableWidgetItem('类型'))
+        self.setCellWidget(0, 1, self.kind_comBox)
+        self.setItem(1, 0, QTableWidgetItem('SNR'))
+        self.setCellWidget(1, 1, self.alpha_spinBox)
         self.signal_connect()

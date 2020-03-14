@@ -14,7 +14,8 @@ items = [
     ContourItem,
     HoughLineItem,
     LightItem,
-    GammaItem
+    GammaItem,
+    NoiseItem
 ]
 
 tables = [
@@ -28,7 +29,7 @@ tables = [
     ContourTableWidget,
     HoughLineTableWidget,
     LightTableWidget,
-    GammaITabelWidget
-
+    GammaITabelWidget,
+    NoiseTableWidget
 ]
 

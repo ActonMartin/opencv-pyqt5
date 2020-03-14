@@ -3,9 +3,12 @@ import cv2
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+from flags import OPEN_DIR
 
 
 class GraphicsView(QGraphicsView):
+    """ 中间的图形显示类
+    """
     def __init__(self, parent=None):
         super(GraphicsView, self).__init__(parent=parent)
         self._zoom = 0
@@ -21,16 +24,31 @@ class GraphicsView(QGraphicsView):
         self.setMinimumSize(640, 480)
 
     def contextMenuEvent(self, event):
+        """ 右键菜单
+
+        :param event:
+        :return:
+        """
         if not self.has_photo():
             return
         menu = QMenu()
+        copy_action = QAction('复制', self)
         save_action = QAction('另存为', self)
+        copy_action.triggered.connect(self.copy_current)  # 复制到粘贴板
         save_action.triggered.connect(self.save_current)  # 传递额外值
+
+        menu.addAction(copy_action)
         menu.addAction(save_action)
+
         menu.exec(QCursor.pos())
 
+    def copy_current(self):
+        # TODO
+        clipboard = QApplication.clipboard()
+        clipboard.setPixmap(self._photo.pixmap())
+
     def save_current(self):
-        file_name = QFileDialog.getSaveFileName(self, '另存为', './', 'Image files(*.jpg *.gif *.png)')[0]
+        file_name = QFileDialog.getSaveFileName(self, '另存为', OPEN_DIR, 'Image files(*.jpg *.gif *.png *.jpeg)')[0]
         print(file_name)
         if file_name:
             self._photo.pixmap().save(file_name)

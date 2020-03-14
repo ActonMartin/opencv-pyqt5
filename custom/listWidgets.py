@@ -11,7 +11,7 @@ class MyListWidget(QListWidget):
         self.mainwindow = parent
         self.setDragEnabled(True)
         # 选中不显示虚线
-        # self.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.setFocusPolicy(Qt.NoFocus)
 
 
@@ -30,7 +30,8 @@ class UsedListWidget(MyListWidget):
     def contextMenuEvent(self, e):
         # 右键菜单事件
         item = self.itemAt(self.mapFromGlobal(QCursor.pos()))
-        if not item: return  # 判断是否是空白区域
+        if not item:
+            return  # 判断是否是空白区域
         menu = QMenu()
         delete_action = QAction('删除', self)
         delete_action.triggered.connect(lambda: self.delete_item(item))  # 传递额外值
@@ -66,15 +67,16 @@ class FuncListWidget(MyListWidget):
         self.setViewMode(QListView.IconMode)  # 设置列表模式
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)  # 关掉滑动条
         self.setAcceptDrops(False)
-        for itemType in items:
+        for itemType in items:  # 添加所有图像算法按钮
             self.addItem(itemType())
-        self.itemClicked.connect(self.add_used_function)
+        self.itemClicked.connect(self.add_used_function)  # 点击信号
 
     def add_used_function(self):
         func_item = self.currentItem()
         if type(func_item) in items:
-            use_item = type(func_item)()
-            self.mainwindow.useListWidget.addItem(use_item)
+            use_item = type(func_item)()  # ? TODO
+            # 调用子类方法
+            self.mainwindow.useListWidget.addItem(use_item)  # use_item 和 func_item同一个类吗？
             self.mainwindow.update_image()
 
     def enterEvent(self, event):

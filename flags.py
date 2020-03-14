@@ -94,3 +94,10 @@ BLUE_CHANNEL = 0
 GREEN_CHANNEL = 1
 RED_CHANNEL = 2
 ALL_CHANNEL = 3
+
+# 噪声
+SALT_AND_PEPPER_NOISE = 0
+GUASS_NOISE = 1
+
+# 图片根目录
+OPEN_DIR = "/Users/mac/Pictures"
